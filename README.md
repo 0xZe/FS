@@ -9,6 +9,8 @@
 #### Step 7: Auto deploy the stack via ArgoCD using the helm chart that we wrote it down previously taking into account to prevent any changes from the server side to be applied, only changes can be done from the helm chart that is pushed on the repository. 
 
 
+
+
 ## Step 1: Create python-app docker image and push this image to dockerhub and make the image a private image.
 
 - `Write Dockerfile to build the flask application to docker image`
