@@ -1,12 +1,12 @@
 # Project in steps
 
-Step 1: Create python-app docker image and push this image to dockerhub and make the image a private image
-Step 2: Create docker-compose.yml that contains the services python-app,MySQL and phpmyadmin.
-Step 3: Create other docker-compose.yml contains jwilder/nginx-proxy to expose python-app and phpmyadmin with a self signed certificates
-Step 4: Deploy the python-app,MySQL and phpmyadmin to k8s minikube cluster taking into account the persistence of MySQL data,put Environment variables in Configmap,acees applications from outside the minilube and use the same domains and use self signed certificates as in docker-compose.
-Step 5: Install gitlab and push previous code(docker-compose files and k8s files) on gitlab, and configure a pipeline with gitlab-ci file to auto deploy the stack on the docker environment and the kubernetes environment
-Step 6: Write down the whole k8s files (deployments,configmaps, secrets, services, ingreses, etc) to a helm chart, in other meaning, create a helm chart for the stack.
-Step 7: Auto deploy the stack via ArgoCD using the helm chart that we wrote it down previously taking into account to prevent any changes from the server side to be applied, only changes can be done from the helm chart that is pushed on the repository. 
+#### Step 1: Create python-app docker image and push this image to dockerhub and make the image a private image.
+#### Step 2: Create docker-compose.yml that contains the services python-app,MySQL and phpmyadmin.
+#### Step 3: Create other docker-compose.yml contains jwilder/nginx-proxy to expose python-app and phpmyadmin with a self signed certificates.
+#### Step 4: Deploy the python-app,MySQL and phpmyadmin to k8s minikube cluster taking into account the persistence of MySQL data, Put Environment variables in Configmap, Acees applications from outside the minilube using the same domains and use self signed certificates as in docker-compose.
+#### Step 5: Install gitlab and push previous code(docker-compose files and k8s files) on gitlab, and configure a pipeline with gitlab-ci file to auto deploy the stack on the docker environment and the kubernetes environment.
+#### Step 6: Write down the whole k8s files (deployments,configmaps, secrets, services, ingreses, etc) to a helm chart, in other meaning, create a helm chart for the stack.
+#### Step 7: Auto deploy the stack via ArgoCD using the helm chart that we wrote it down previously taking into account to prevent any changes from the server side to be applied, only changes can be done from the helm chart that is pushed on the repository. 
 
 
 ## Step 1: Create python-app docker image and push this image to dockerhub and make the image a private image.
