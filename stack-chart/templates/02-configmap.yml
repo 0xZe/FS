@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap #{{ include "app-stack.fullname" . }}-config
+  labels:
+    app: {{ .Release.Name }}-configmap
+#  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+#    "helm.sh/hook": pre-install
+#    "helm.sh/hook-weight": "-5"
+#    "helm.sh/hook-delete-policy": hook-succeeded
+    
+  namespace: {{ .Values.namespace }}
+data:
+  MYSQL_HOST: {{ .Release.Name }}-db
+  MYSQL_USER: {{ .Values.configMap.MYSQL_USER }}
+  MYSQL_PASSWORD: {{ .Values.configMap.MYSQL_PASSWORD }}
+  MYSQL_DBNAME: {{ .Values.configMap.MYSQL_DBNAME }}
+  MYSQL_ROOT_PASSWORD: {{ .Values.configMap.MYSQL_ROOT_PASSWORD }}
+  PMA_HOST: {{ .Release.Name }}-db
+  PMA_PASSWORD: {{ .Values.configMap.PMA_PASSWORD }}
+  PMA_USER: {{ .Values.configMap.PMA_USER }}

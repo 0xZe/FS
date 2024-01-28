@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-flask-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+  - hosts:
+      - {{ .Values.phpMyAdmin.ingress.host }}
+    secretName: {{ .Values.phptlsSecretName }}
+#  ingressClassName: nginx
+  rules:
+#name based routing (virtual hosting)  
+  - host: {{ .Values.flask.ingress.host }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-flask-app-service
+            port:
+              number: {{ .Values.flask.svcPort }}
+

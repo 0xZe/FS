@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apps-config
+  namespace: my-apps
+data:
+  MYSQL_HOST: db
+  MYSQL_USER: ze
+  MYSQL_PASSWORD: deeb
+  MYSQL_DBNAME: mydb
+  MYSQL_ROOT_PASSWORD: deeb
+  PMA_HOST: db
+  PMA_PASSWORD: deeb
+  PMA_USER: ze

@@ -1,0 +1,38 @@
+namespace: my-apps
+
+configMap:
+  MYSQL_USER: ze
+  MYSQL_PASSWORD: deeb
+  MYSQL_DBNAME: mydb
+  MYSQL_ROOT_PASSWORD: deeb
+  PMA_PASSWORD: deeb
+  PMA_USER: ze
+
+pvc:
+  accessModes: ReadWriteOnce
+  storage: 1Gi
+
+db:
+  replicaCount: 1
+  imageRepository: mysql
+  imageTag: "5.7"
+
+flask:
+  replicaCount: 1
+  account: 0xze
+  imageRepository: flask-app
+  svcPort: 80
+  svcType: NodePort
+  ingress:
+    host: flask-app.local
+
+phpMyAdmin:
+  replicaCount: 1
+  svcPort: 80
+  svcType: NodePort
+  ingress:
+    host: phpmyadmin.local
+
+
+flasktlsSecretName: flask-tls-secret
+phptlsSecretName: php-tls-secret

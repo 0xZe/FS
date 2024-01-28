@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-php-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+  - hosts:
+      - {{ .Values.phpMyAdmin.ingress.host }}
+    secretName: {{ .Values.phptlsSecretName }}
+#  ingressClassName: nginx
+  rules:  
+  - host: {{ .Values.phpMyAdmin.ingress.host }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Name }}-phpmyadmin-service
+            port:
+              number: {{ .Values.phpMyAdmin.svcPort }}

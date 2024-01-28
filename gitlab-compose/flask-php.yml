@@ -1,0 +1,30 @@
+# docker-compose.yml
+version: '3'
+services:
+  flask-app:
+    image: 0xze/flask-app  
+    env_file:
+      - ./flask.env
+#    ports:
+#      - "5000:5000"
+#    depends_on:
+#      - db
+    #healthcheck:
+    #  test: ["CMD", "mysqladmin", "ping", "-h", "db", "-u", "ze", "-p deeb"]
+    networks:
+      - proxy
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    env_file:
+      - ./php.env
+#    depends_on:
+#      - db
+    networks:
+      - proxy
+#    ports:
+#      - "8080:80"
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: flask-app
+  name: flask-app
+  namespace: my-apps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: flask-app
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yml convert
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/proxy: "true"
+        io.kompose.service: flask-app
+    spec:
+      imagePullSecrets:
+      - name: my-dockerhub-secret
+      containers:
+        - envFrom:
+          - configMapRef:
+              name: apps-config
+          image: 0xze/flask-app
+          name: flask-app
+          imagePullPolicy: Always 
+          resources: {}
+      restartPolicy: Always
+status: {}

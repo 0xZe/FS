@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-db
+  labels:
+    app: {{ .Release.Name }}-db
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.db.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-db
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-db
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-db
+          image: "{{ .Values.db.imageRepository }}:{{ .Values.db.imageTag }}"
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-configmap
+          volumeMounts:
+            - name: {{ .Release.Name }}-mysql-pv-claim
+              mountPath: /var/lib/mysql
+          ports:
+            - containerPort: 3306
+          resources: {}
+      volumes:
+        - name: {{ .Release.Name }}-mysql-pv-claim
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-mysql-pv-claim

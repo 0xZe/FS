@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    env_file:
+      - ./db.env
+    ports:
+      - "3306:3306"
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true

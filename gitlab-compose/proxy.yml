@@ -1,0 +1,20 @@
+# docker-compose-proxy.yml
+version: '3'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+#      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx-proxy/certs:/etc/nginx/certs:ro
+##      - /etc/nginx/vhost.d
+#      - /usr/share/nginx/html
+#      - /var/log/nginx
+    networks:
+      - proxy
+networks:
+  proxy:
+    external: true

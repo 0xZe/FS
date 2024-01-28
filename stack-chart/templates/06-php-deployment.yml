@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-phpmyadmin
+  labels:
+    app: {{ .Release.Name }}-phpmyadmin
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.phpMyAdmin.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-phpmyadmin
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-phpmyadmin
+    spec:
+      containers:
+        - envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }}-configmap
+          image: phpmyadmin/phpmyadmin
+          name: {{ .Release.Name }}-phpmyadmin
+          imagePullPolicy: Always
+          resources: {}
+      restartPolicy: Always

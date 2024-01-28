@@ -1,0 +1,25 @@
+version: '3'
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    restart: always
+    hostname: localhost
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost'
+    ports:
+      - "80:80"
+      - "8444:443"
+    volumes:
+      - ./gitlab/config:/etc/gitlab
+      - ./gitlab/logs:/var/log/gitlab
+      - ./gitlab/data:/var/opt/gitlab
+
+
+#To put password to gitlab
+#sudo docker exec -it gitlab gitlab-rake "gitlab:password:reset[root]"
+
+#./gitlab/config:/etc/gitlab: It's used to persist GitLab configuration files.
+#./gitlab/logs:/var/log/gitlab: It's used to persist GitLab log files.
+#./gitlab/data:/var/opt/gitlab: It's used to persist GitLab data,including repositories,databases,and other runtime data.

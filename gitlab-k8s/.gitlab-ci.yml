@@ -1,0 +1,35 @@
+variables:
+#  MY_URLS: "https://flask-app.local https://phpmyadmin.local"
+   FLASK_ENDPOINT: https://flask-app.local
+   PHP_ENDPOINT: https://phpmyadmin.local
+
+stages:
+
+  - deploy_k8s
+
+deploy_k8s:
+
+  tags:
+    - shell
+
+  stage: deploy_k8s
+
+  before_script:
+    - export KUBECONFIG=$KUBE_CONFIG
+
+  script:
+    - kubectl apply -f configmap.yml -f db-pvc.yml -f pull-image-secret.yml -f tls-secrets.yml
+    - kubectl apply -f db-deployment.yml -f db-service.yml
+    - chmod +x wait.sh
+    - ./wait.sh
+    - kubectl apply -f php-deployment.yml -f php-service.yml
+    - kubectl apply -f flask-deployment.yml -f flask-service.yml
+#    - kubectl apply -f ingress-controller-nginx.yml
+    - chmod +x apply-ingress.sh
+    - ./apply-ingress.sh
+  
+  environment:
+    name: k8s
+    url: $PHP_ENDPOINT
+#      - $FLASK_ENDPOINT
+#      - $PHP_ENDPOINT
